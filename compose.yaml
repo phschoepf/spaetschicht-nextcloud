@@ -1,3 +1,13 @@
+# adapted from 
+# https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/with-nginx-proxy/mariadb/apache/compose.yaml
+secrets:
+  db_root:
+    file: creds/db_root
+  db_user:
+    file: creds/db_user
+  nc_admin:
+    file: creds/nc_admin
+
 services:
   db:
     image: mariadb:10.11
@@ -6,11 +16,14 @@ services:
     volumes:
       - db:/var/lib/mysql:Z
     environment:
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root
       - MARIADB_AUTO_UPGRADE=1
       - MARIADB_DISABLE_UPGRADE_BACKUP=1
     env_file:
       - db.env
+    secrets:
+      - db_root
+      - db_user
 
   redis:
     image: redis:alpine
@@ -28,8 +41,13 @@ services:
       - LETSENCRYPT_EMAIL=
       - MYSQL_HOST=db
       - REDIS_HOST=redis
+      - NEXTCLOUD_ADMIN_USER=admin
+      - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/nc_admin
     env_file:
       - db.env
+    secrets:
+      - db_user
+      - nc_admin
     depends_on:
       - db
       - redis
