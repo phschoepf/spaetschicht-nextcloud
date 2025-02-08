@@ -32,7 +32,7 @@ services:
       - redis:/data
 
   app:
-    image: nextcloud:apache
+    build: ./nextcloud
     restart: always
     volumes:
       - nextcloud:/var/www/html:z
