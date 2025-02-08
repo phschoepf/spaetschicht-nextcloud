@@ -28,6 +28,8 @@ services:
   redis:
     image: redis:alpine
     restart: always
+    volumes:
+      - redis:/data
 
   app:
     image: nextcloud:apache
@@ -120,6 +122,7 @@ services:
 
 volumes:
   db:
+  redis:
   nextcloud:
   certs:
   acme:
