@@ -80,7 +80,7 @@ services:
       - TZ=Europe/Vienna
       - dictionaries=de_DE
       - server_name=collabora.gehtsch.ooo
-      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:ssl.sts.enabled=true"
       - VIRTUAL_HOST=collabora.gehtsch.ooo
       - LETSENCRYPT_HOST=collabora.gehtsch.ooo
       - LETSENCRYPT_EMAIL=philemon.schoepf@gmail.com
