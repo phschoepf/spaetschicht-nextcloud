@@ -43,9 +43,11 @@ services:
       - NEXTCLOUD_ADMIN_USER=admin
       - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/nc_admin
       - NEXTCLOUD_TRUSTED_DOMAINS=\* # Allow all origins
+      - VIRTUAL_HOST=pbnc.gehtsch.ooo
+      - LETSENCRYPT_HOST=pbnc.gehtsch.ooo
+      - LETSENCRYPT_EMAIL=philemon.schoepf@gmail.com
     env_file:
       - db.env
-      - letsencrypt.env
     secrets:
       - db_user
       - nc_admin
@@ -71,6 +73,23 @@ services:
       - db
       - redis
 
+  collabora:
+    image: collabora/code
+    restart: always
+    environment:
+      - TZ=Europe/Vienna
+      - dictionaries=de_DE
+      - server_name=collabora.gehtsch.ooo
+      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true"
+      - VIRTUAL_HOST=collabora.gehtsch.ooo
+      - LETSENCRYPT_HOST=collabora.gehtsch.ooo
+      - LETSENCRYPT_EMAIL=philemon.schoepf@gmail.com
+    networks:
+      - proxy-tier
+    cap_add:
+      - MKNOD
+    tty: true
+
   proxy:
     build: ./proxy
     restart: always
@@ -91,8 +110,8 @@ services:
   letsencrypt-companion:
     image: nginxproxy/acme-companion
     restart: always
-    env_file:
-      - letsencrypt.env
+    environment:
+      - DEFAULT_EMAIL=philemon.schoepf@gmail.com
     volumes:
       - certs:/etc/nginx/certs:z
       - acme:/etc/acme.sh:z
