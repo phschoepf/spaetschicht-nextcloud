@@ -119,3 +119,11 @@ volumes:
 3. Start the Nextcloud container with the new volume: `docker-compose up -d`. Check if you can log in using the credentials from the old deployment.
 4. Set up Collabora Online as described above again
 5. Customize the config as described above again
+
+## Change the hostname
+1. Add an A record for both the Nextcloud and Collabora Online hostnames under a new domain
+2. Remove the old A records
+3. Change all occurrences of the old hostname in the `compose.yaml` file to the new hostname
+4. Restart the Nextcloud container to regenerate the Let's Encrypt certificates: `docker-compose restart`
+
+(Tip: You can add a user to the admin group temporarily to access the admin settings in the Web UI: `docker exec -itu www-data nextcloud-app-1 php occ group:adduser admin <username>`)
