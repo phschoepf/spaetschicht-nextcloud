@@ -48,17 +48,19 @@ You can log in with the username `admin` and the password from the `creds/nc_adm
 Most config will be set in the `var/www/html/config/config.php` file. To edit it, open a terminal in the Nextcloud container: `docker exec -it -u www-data nextcloud-app-1 /bin/bash`. 
 Then use `php occ config:system:set ...` to set the config values. Some recommended changes:
 
+* Always use HTTPS: `php occ config:system:set overwriteprotocol --value=https`
+* Set overwrite.cli.url to the public URL: `php occ config:system:set overwrite.cli.url --value=https://nextcloud.pembau.art`
 * Configure trusted proxies: `php occ config:system:set trusted_proxies 0 --value=172.16.0.0/12` (adds local proxies to the trusted list)
 * Disable demo/template files for new users: `php occ config:system:set skeletondirectory --value=""`
 * Configure a maintenance window for cronjobs: `php occ config:system:set maintenance_window_start --type=integer --value=1`
 * Set a default phone region: `php occ config:system:set default_phone_region --value=AT`
 * Migrate MIME types to the new format: `php occ maintenance:repair --include-expensive`
 * Add optional DB indexes: `php occ db:add-missing-indices`
-* Restrict WOPI (Nextcloud Office protocol) access to servers in the local network: `php occ config:app:set richdocuments wopi_allowlist --value=172.16.0.0/12`
 
 ### Set up Collabora Online
 1. Add the Nextcloud Office app from the app list in the Nextcloud Web UI.
 2. In Administration Settings -> Office, select "Use your own server" and set the  URL to `collabora.nextcloud.pembau.art` (the VIRTUAL_HOST from the `docker-compose.yml` file).
+3. Restrict WOPI (Nextcloud Office protocol) access to servers in the local network: `php occ config:app:set richdocuments wopi_allowlist --value=172.16.0.0/12`
 
 
 # Migration (2025-02-27)
