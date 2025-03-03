@@ -47,6 +47,7 @@ services:
       REDIS_HOST: redis
       NEXTCLOUD_ADMIN_USER: admin
       NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nc_admin
+      NEXTCLOUD_HOSTNAME: *nc-domain
       NEXTCLOUD_TRUSTED_DOMAINS: *nc-domain
       VIRTUAL_HOST: *nc-domain
       LETSENCRYPT_HOST: *nc-domain
@@ -101,6 +102,8 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      TRUST_DOWNSTREAM_PROXY: "false"
     labels:
       - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     volumes:
