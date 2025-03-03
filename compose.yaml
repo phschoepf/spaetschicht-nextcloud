@@ -1,5 +1,10 @@
 # adapted from 
 # https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/with-nginx-proxy/mariadb/apache/compose.yaml
+x-shared-vars:
+  nc-domain: &nc-domain nextcloud.pembau.art
+  collabora-domain: &collabora-domain collabora.nextcloud.pembau.art
+  lenc-email: &lenc-email admin@pembau.art
+
 secrets:
   db_root:
     file: creds/db_root
@@ -42,10 +47,10 @@ services:
       REDIS_HOST: redis
       NEXTCLOUD_ADMIN_USER: admin
       NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nc_admin
-      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.pembau.art
-      VIRTUAL_HOST: nextcloud.pembau.art
-      LETSENCRYPT_HOST: nextcloud.pembau.art
-      LETSENCRYPT_EMAIL: admin@pembau.art
+      NEXTCLOUD_TRUSTED_DOMAINS: *nc-domain
+      VIRTUAL_HOST: *nc-domain
+      LETSENCRYPT_HOST: *nc-domain
+      LETSENCRYPT_EMAIL: *lenc-email
     env_file:
       - db.env
     secrets:
@@ -79,11 +84,11 @@ services:
     environment:
       TZ: Europe/Vienna
       dictionaries: de_DE
-      server_name: collabora.nextcloud.pembau.art
+      server_name: *collabora-domain
       extra_params: --o:ssl.enable=false --o:ssl.termination=true --o:ssl.sts.enabled=true
-      VIRTUAL_HOST: collabora.nextcloud.pembau.art
-      LETSENCRYPT_HOST: collabora.nextcloud.pembau.art
-      LETSENCRYPT_EMAIL: admin@pembau.art
+      VIRTUAL_HOST: *collabora-domain
+      LETSENCRYPT_HOST: *collabora-domain
+      LETSENCRYPT_EMAIL: *lenc-email
     networks:
       - proxy-tier
     cap_add:
@@ -111,7 +116,7 @@ services:
     image: nginxproxy/acme-companion
     restart: always
     environment:
-      DEFAULT_EMAIL: admin@pembau.art
+      DEFAULT_EMAIL: *lenc-email
     volumes:
       - certs:/etc/nginx/certs:z
       - acme:/etc/acme.sh:z
