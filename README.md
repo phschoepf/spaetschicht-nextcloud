@@ -16,6 +16,15 @@ We will use `nextcloud.pembau.art`  for Nextcloud, and `collabora.nextcloud.pemb
 1. SSH into the instance using the SSH identity whose public key we registered at VM creation: `ssh root@<external_ip> -i ~/.ssh/<private_key>`
 2. Update the installed packages: `apt update && apt upgrade -y`
 3. Install docker using the official docs: https://docs.docker.com/engine/install/debian/#install-using-the-repository
+4. Configure Docker logging: create a file `/etc/docker/daemon.json` with the following content:
+
+```json
+{
+  "log-driver": "local"
+}
+```
+
+5. Restart the Docker service: `systemctl restart docker`
 
 ### Drop root privileges
 1. Set a strong root password: `sudo passwd`
