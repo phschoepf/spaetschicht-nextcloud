@@ -16,9 +16,9 @@ services:
     volumes:
       - db:/var/lib/mysql:Z
     environment:
-      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root
-      - MARIADB_AUTO_UPGRADE=1
-      - MARIADB_DISABLE_UPGRADE_BACKUP=1
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root
+      MARIADB_AUTO_UPGRADE: "1"
+      MARIADB_DISABLE_UPGRADE_BACKUP: "1"
     env_file:
       - db.env
     secrets:
@@ -38,14 +38,14 @@ services:
       - nextcloud:/var/www/html:z
       # NOTE: The `volumes` config of the `cron` and `app` containers must match
     environment:
-      - MYSQL_HOST=db
-      - REDIS_HOST=redis
-      - NEXTCLOUD_ADMIN_USER=admin
-      - NEXTCLOUD_ADMIN_PASSWORD_FILE=/run/secrets/nc_admin
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.pembau.art
-      - VIRTUAL_HOST=nextcloud.pembau.art
-      - LETSENCRYPT_HOST=nextcloud.pembau.art
-      - LETSENCRYPT_EMAIL=admin@pembau.art
+      MYSQL_HOST: db
+      REDIS_HOST: redis
+      NEXTCLOUD_ADMIN_USER: admin
+      NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nc_admin
+      NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.pembau.art
+      VIRTUAL_HOST: nextcloud.pembau.art
+      LETSENCRYPT_HOST: nextcloud.pembau.art
+      LETSENCRYPT_EMAIL: admin@pembau.art
     env_file:
       - db.env
     secrets:
@@ -77,13 +77,13 @@ services:
     image: collabora/code
     restart: always
     environment:
-      - TZ=Europe/Vienna
-      - dictionaries=de_DE
-      - server_name=collabora.nextcloud.pembau.art
-      - "extra_params=--o:ssl.enable=false --o:ssl.termination=true --o:ssl.sts.enabled=true"
-      - VIRTUAL_HOST=collabora.nextcloud.pembau.art
-      - LETSENCRYPT_HOST=collabora.nextcloud.pembau.art
-      - LETSENCRYPT_EMAIL=admin@pembau.art
+      TZ: Europe/Vienna
+      dictionaries: de_DE
+      server_name: collabora.nextcloud.pembau.art
+      extra_params: --o:ssl.enable=false --o:ssl.termination=true --o:ssl.sts.enabled=true
+      VIRTUAL_HOST: collabora.nextcloud.pembau.art
+      LETSENCRYPT_HOST: collabora.nextcloud.pembau.art
+      LETSENCRYPT_EMAIL: admin@pembau.art
     networks:
       - proxy-tier
     cap_add:
@@ -111,7 +111,7 @@ services:
     image: nginxproxy/acme-companion
     restart: always
     environment:
-      - DEFAULT_EMAIL=admin@pembau.art
+      DEFAULT_EMAIL: admin@pembau.art
     volumes:
       - certs:/etc/nginx/certs:z
       - acme:/etc/acme.sh:z
@@ -130,11 +130,11 @@ services:
 #    volumes:
 #      - certs:/certs
 #    environment:
-#      - SSL_SUBJECT=servhostname.local
-#      - CA_SUBJECT=my@example.com
-#      - SSL_KEY=/certs/servhostname.local.key
-#      - SSL_CSR=/certs/servhostname.local.csr
-#      - SSL_CERT=/certs/servhostname.local.crt
+#      SSL_SUBJECT: servhostname.local
+#      CA_SUBJECT: my@example.com
+#      SSL_KEY: /certs/servhostname.local.key
+#      SSL_CSR: /certs/servhostname.local.csr
+#      SSL_CERT: /certs/servhostname.local.crt
 #    networks:
 #      - proxy-tier
 
