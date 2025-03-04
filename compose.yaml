@@ -49,6 +49,7 @@ services:
       NEXTCLOUD_ADMIN_PASSWORD_FILE: /run/secrets/nc_admin
       NEXTCLOUD_HOSTNAME: *nc-domain
       NEXTCLOUD_TRUSTED_DOMAINS: *nc-domain
+      PHP_OPCACHE_MEMORY_CONSUMPTION: 256
       VIRTUAL_HOST: *nc-domain
       LETSENCRYPT_HOST: *nc-domain
       LETSENCRYPT_EMAIL: *lenc-email
