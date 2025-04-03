@@ -37,7 +37,7 @@ services:
       - redis:/data
 
   app:
-    image: nextcloud:29-apache
+    image: nextcloud:30-apache
     restart: always
     volumes:
       - nextcloud:/var/www/html:z
@@ -70,7 +70,7 @@ services:
       - default
 
   cron:
-    image: nextcloud:29-apache
+    image: nextcloud:30-apache
     restart: always
     volumes:
       - nextcloud:/var/www/html:z

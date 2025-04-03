@@ -33,7 +33,7 @@ We will use `nextcloud.pembau.art`  for Nextcloud, and `collabora.nextcloud.pemb
 4. Copy root's SSH public key to the new user: `mkdir /home/dockeruser/.ssh && cp ~/.ssh/authorized_keys /home/dockeruser/.ssh/ && chown -R dockeruser:dockeruser /home/dockeruser/.ssh`
 5. Exit the root session and reconnect as the new user: `ssh dockeruser@<external_ip> -i ~/.ssh/<private_key>`
 6. Get root privileges with `su` and the root password
-7. As the root user, disable root SSH login: `nano /etc/ssh/sshd_config` and set `PermitRootLogin no`
+7. As the root user, disable root SSH login: `nano /etc/ssh/sshd_config` and set `PermitRootLogin no`, `PasswordAuthentication no`, and comment out `Subsystem sftp /usr/lib/openssh/sftp-server`
 8. Restart SSH service: `systemctl restart sshd`
 
 Trying to log in with `ssh root@<external_ip> -i ~/.ssh/<private_key>` should now fail.
