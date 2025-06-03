@@ -367,7 +367,7 @@
     </indirection_endpoint>
 
     <home_mode>
-        <enable desc="Home users can enable this setting, which in turn disables welcome screen and user feedback popups, but also limits concurrent open connections to 20 and concurrent open documents to 10. The default means that number of concurrent open connections and concurrent open documents are unlimited, but welcome screen and user feedback cannot be switched off." type="bool" default="false">false</enable>
+        <enable desc="Home users can enable this setting, which in turn disables welcome screen and user feedback popups, but also limits concurrent open connections to 20 and concurrent open documents to 10. The default means that number of concurrent open connections and concurrent open documents are unlimited, but welcome screen and user feedback cannot be switched off." type="bool" default="false">true</enable>
     </home_mode>
 
     
