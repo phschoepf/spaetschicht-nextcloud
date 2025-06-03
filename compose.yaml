@@ -95,6 +95,7 @@ services:
       - proxy-tier
     cap_add:
       - MKNOD
+      - SYS_ADMIN
     tty: true
 
   proxy:
