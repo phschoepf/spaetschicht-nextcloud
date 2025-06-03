@@ -81,7 +81,7 @@ services:
       - redis
 
   collabora:
-    image: collabora/code
+    build: ./collabora
     restart: always
     environment:
       TZ: Europe/Vienna
