@@ -6,7 +6,7 @@ BACKUP_FILE="$VOLUME.tar.gz.enc"
 echo "Starting restoring volume: $VOLUME"
 
 # Decrypt the symmetric key
-SYMKEY=$(openssl pkeyutl -decrypt -inkey $PRIVATE_KEY_FILE -in "/backup/$VOLUME.key.enc") && \
+openssl pkeyutl -decrypt -inkey $PRIVATE_KEY_FILE -in "/backup/$VOLUME.key.enc" -out "/data_encryption_key" && \
 
 # Decrypt the backup using the symmetric key
-openssl enc -d -aes-256-cbc -pbkdf2 -pass pass:"$SYMKEY" -in "/backup/$BACKUP_FILE" | tar xzf - -C "/$VOLUME"
+openssl enc -d -aes-256-cbc -pbkdf2 -pass file:/data_encryption_key -in "/backup/$BACKUP_FILE" | tar xzf - -C "/$VOLUME"
