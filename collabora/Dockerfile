@@ -1,4 +1,4 @@
-FROM collabora/code:latest
+FROM collabora/code:24.04.13.3.1
 
 # Replace the default config with our custom one
 COPY coolwsd.xml /etc/coolwsd/coolwsd.xml
