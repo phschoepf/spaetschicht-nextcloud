@@ -138,21 +138,3 @@ volumes:
 4. Restart the Nextcloud container to regenerate the Let's Encrypt certificates: `docker-compose restart`
 
 (Tip: You can add a user to the admin group temporarily to access the admin settings in the Web UI: `docker exec -itu www-data nextcloud-app-1 php occ group:adduser admin <username>`)
-
-# External Backup to Google Cloud Storage
-We periodically back up the data in the Nextcloud Docker volumes to Google Cloud Storage. The backup script is located at `backup/run_backup.sh`.
-
-## GCP Setup
-This is a one-time setup that needs to be done on Google Cloud Platform (GCP).
-1. Create a GCP bucket named `nextcloud-pembau-art-backup`. We use the `Standard` storage class and no versioning/soft delete, as we only need the latest backup.
-2. Create a service account with the `Storage Object User` role on the bucket.
-3. Create a JSON key file for the service account.
-
-## Local Setup
-1. Save the service account JSON key file at `backup/google-application-credentials.json` folder. A template key file is already present in the repo.
-2. Set up a cron job to run the backup script periodically. For example, to run it every Sunday at 4 AM, add the following line to the crontab:
-
-```bash
-crontab -e
-0 4 * * 0 bash /home/dockeruser/nextcloud/backup/run_backup.sh >> /home/dockeruser/nextcloud/backup/backup.log 2>&1
-```
