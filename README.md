@@ -148,25 +148,11 @@ This is a one-time setup that needs to be done on Google Cloud Platform (GCP).
 2. Create a service account with the `Storage Object User` role on the bucket.
 3. Create a JSON key file for the service account.
 
-## Nextcloud Server Setup
-1. Save the service account JSON key file at `backup/google-application-credentials.json`. A template key file is already present in the repo.
-2. Create a OpenSSL key pair for encrypting the backups *on your local machine*. Don't upload the private key to the server.
-
-```bash
-openssl genpkey -algorithm RSA -out backup/backup-private.pem -pkeyopt rsa_keygen_bits:4096
-openssl rsa -in backup/backup-private.pem -pubout -out backup/backup-public.pem
-```
-
-Only the public key needs to be stored on the server. The private key should be kept offline and is only needed for restoring the backups.
-3. Set up a cron job on the server to run the backup script periodically. For example, to run it every Sunday at 4 AM, add the following line to the crontab:
+## Local Setup
+1. Save the service account JSON key file at `backup/google-application-credentials.json` folder. A template key file is already present in the repo.
+2. Set up a cron job to run the backup script periodically. For example, to run it every Sunday at 4 AM, add the following line to the crontab:
 
 ```bash
 crontab -e
 0 4 * * 0 bash /home/dockeruser/nextcloud/backup/run_backup.sh >> /home/dockeruser/nextcloud/backup/backup.log 2>&1
 ```
-## Restoring the backup
-1. Save the service account JSON key file at `backup/google-application-credentials.json`.
-2. Copy the `backup/backup-private.pem` file to the server to restore the data on.
-3. Run the `backup/run_restore.sh` script. It will download the latest backup from GCP, decrypt it using the private key, and restore the Docker volumes from the backup files.
-4. After restoring the volumes, you can start the Nextcloud container again with `docker-compose up -d`.
-   Note: You may need to rename the volumes and/or set them to `external: true` in the `compose.yml` file.
