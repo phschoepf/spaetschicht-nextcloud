@@ -15,7 +15,7 @@ secrets:
 
 services:
   db:
-    image: mariadb:10.11
+    image: mariadb:11.4
     command: --transaction-isolation=READ-COMMITTED
     restart: always
     volumes:
@@ -37,7 +37,7 @@ services:
       - redis:/data
 
   app:
-    image: nextcloud:31-apache
+    image: nextcloud:32-apache
     restart: always
     volumes:
       - nextcloud:/var/www/html:z
@@ -70,7 +70,7 @@ services:
       - default
 
   cron:
-    image: nextcloud:31-apache
+    image: nextcloud:32-apache
     restart: always
     volumes:
       - nextcloud:/var/www/html:z
