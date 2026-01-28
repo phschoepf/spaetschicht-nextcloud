@@ -1,9 +1,9 @@
 # adapted from 
 # https://github.com/nextcloud/docker/blob/master/.examples/docker-compose/with-nginx-proxy/mariadb/apache/compose.yaml
 x-shared-vars:
-  nc-domain: &nc-domain nextcloud.pembau.art
-  collabora-domain: &collabora-domain collabora.nextcloud.pembau.art
-  lenc-email: &lenc-email admin@pembau.art
+  nc-domain: &nc-domain spaetschicht-nextcloud.gehtsch.ooo
+  collabora-domain: &collabora-domain collabora.spaetschicht-nextcloud.gehtsch.ooo
+  lenc-email: &lenc-email philemon.schoepf@gmail.com
 
 secrets:
   db_root:
