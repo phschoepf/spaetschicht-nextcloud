@@ -12,7 +12,7 @@
 ## Setup
 ### DNS
 In order for the Let's Encrypt auto-setup to work, you need to have a public domain, not only an IP. Set up a *two* DNS A records at your DNS provider pointing to your server's public IP. One will point to the Nextcloud instance, the other to the Collabora Online server for Nextcloud Office.
-We will use `spaetschicht-nextcloud.gehtsch.ooo`  for Nextcloud, and `collabora.spaetschicht-nextcloud.gehtsch.ooo` for Collabora Online.
+We will use `nextcloud.spaetschicht.art`  for Nextcloud, and `collabora.nextcloud.spaetschicht.art` for Collabora Online.
 
 ### Set up Docker prerequisites
 1. SSH into the instance using the SSH identity whose public key we registered at VM creation: `ssh root@<external_ip> -i ~/.ssh/<private_key>`
@@ -60,7 +60,7 @@ Most config will be set in the `var/www/html/config/config.php` file. To edit it
 Then use `php occ config:system:set ...` to set the config values. Some recommended changes:
 
 * Always use HTTPS: `php occ config:system:set overwriteprotocol --value=https`
-* Set overwrite.cli.url to the public URL: `php occ config:system:set overwrite.cli.url --value=https://spaetschicht-nextcloud.gehtsch.ooo`
+* Set overwrite.cli.url to the public URL: `php occ config:system:set overwrite.cli.url --value=https://nextcloud.spaetschicht.art`
 * Configure trusted proxies: `php occ config:system:set trusted_proxies 0 --value=172.16.0.0/12` (adds local proxies to the trusted list)
 * Disable demo/template files for new users: `php occ config:system:set skeletondirectory --value=""`
 * Configure a maintenance window for cronjobs: `php occ config:system:set maintenance_window_start --type=integer --value=1`
@@ -70,7 +70,7 @@ Then use `php occ config:system:set ...` to set the config values. Some recommen
 
 ### Set up Collabora Online
 1. Add the Nextcloud Office app from the app list in the Nextcloud Web UI.
-2. In Administration Settings -> Office, select "Use your own server" and set the  URL to `collabora.spaetschicht-nextcloud.gehtsch.ooo` (the VIRTUAL_HOST from the `docker-compose.yml` file).
+2. In Administration Settings -> Office, select "Use your own server" and set the  URL to `collabora.nextcloud.spaetschicht.art` (the VIRTUAL_HOST from the `docker-compose.yml` file).
 3. Restrict WOPI (Nextcloud Office protocol) access to servers in the local network: `php occ config:app:set richdocuments wopi_allowlist --value=172.16.0.0/12`
 
 
