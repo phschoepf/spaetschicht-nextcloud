@@ -12,6 +12,8 @@ secrets:
     file: creds/db_user
   nc_admin:
     file: creds/nc_admin
+  collabora_admin:
+    file: creds/collabora_admin
 
 services:
   db:
@@ -81,7 +83,10 @@ services:
       - redis
 
   collabora:
-    build: ./collabora
+    build: 
+      context: ./collabora
+      secrets:
+        - collabora_admin
     restart: always
     environment:
       TZ: Europe/Vienna
