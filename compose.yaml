@@ -87,7 +87,6 @@ services:
       TZ: Europe/Vienna
       dictionaries: de_DE
       server_name: *collabora-domain
-      extra_params: --o:ssl.enable=false --o:ssl.termination=true --o:ssl.sts.enabled=true
       VIRTUAL_HOST: *collabora-domain
       LETSENCRYPT_HOST: *collabora-domain
       LETSENCRYPT_EMAIL: *lenc-email
